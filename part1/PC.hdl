@@ -17,4 +17,14 @@ CHIP PC {
 
     PARTS:
     // Put your code here:
+    Inc16(in=number, out=incrementNumber);
+
+    Mux16(a=number, b=incrementNumber, sel=inc, out=numberSelect);
+    
+    Mux16(a=numberSelect, b=in, sel=load, out=outLoad);
+
+    Mux16(a=outLoad, b[0..15]=false, sel=reset, out=outputReset);
+
+    Register(in=outputReset, load=true, out=out, out=number);
+    
 }

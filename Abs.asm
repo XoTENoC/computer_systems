@@ -15,9 +15,15 @@ D; JLT
 (POSITIVE)
 @R0
 M=D
+@END
+0; JMP
 
 (NEGITIVE)
 @R1
 D=!M
 @R0
 M=D+1
+
+(END)
+@END
+0; JMP

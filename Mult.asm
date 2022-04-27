@@ -13,22 +13,13 @@
 
     @R3
     M=0
-    @R4
-    M=0
     @R2
     D=M
     @R4
     M=D
 
-    @R1
-    D=M
-    @end
-    D; JEQ
-    
     @R2
     D=M
-    @end
-    D; JEQ
 
     @LOOP
     D; JGE
@@ -39,12 +30,10 @@
     M=D+1
 
 (LOOP)
-    @R3
-    D=M
     @R1
-    D=D+M
+    D=M
     @R3
-    M=D
+    M=D+M
 
     @R2
     D=M-1

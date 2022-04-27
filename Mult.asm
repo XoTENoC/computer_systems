@@ -16,18 +16,27 @@
     @R4
     M=0
     @R2
-    A=M
+    D=M
     @R4
-    M=A
+    M=D
 
     @R1
     D=M
     @end
     D; JEQ
+    
     @R2
     D=M
     @end
     D; JEQ
+
+    @LOOP
+    D; JGE
+    
+    @R2
+    D=!M
+    @R2
+    M=D+1
 
 (LOOP)
     @R3
@@ -45,9 +54,9 @@
     D; JNE
 
     @R4
-    A=M
+    D=M
     @NEGITIVE
-    A; JLT
+    D; JLT
 
     @POSITIVE
     0; JMP

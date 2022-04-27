@@ -2,3 +2,22 @@
 // (R0, R1 refer to RAM[0], and RAM[1], respectively.)
 
 // Put your code here.
+
+@R1
+D=M
+
+@POSITIVE
+D; JGE
+
+@NEGITIVE
+D; JLT
+
+(POSITIVE)
+@R0
+M=D
+
+(NEGITIVE)
+@R1
+D=!M
+@R0
+M=D+1

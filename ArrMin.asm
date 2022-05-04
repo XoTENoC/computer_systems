@@ -3,12 +3,62 @@
 
 // Put your code here.
 
-    @n
+    @i
     M=0
 
-(LOOP)
-    @n
-    D=M
     @R1
-    D=D+M
-    
+    D=M
+
+    @i
+    AM=D+M
+    D=M
+    @R0
+    M=D
+    @R3
+    M=D
+    @R2
+    M=M-1
+    @LOOP
+    0; JMP
+
+
+(MINIMUM)
+    @i
+    AM=M
+    D=M
+    @R0
+    M=D
+    D=M
+    @R3
+    M=D
+    @R2
+    M=M-1
+    D=M
+    @END
+    D; JEQ
+
+
+(LOOP)
+    @R0
+    D=M
+    @R3
+    M=D
+    @i
+    AM = M+1
+    D=M
+    @R3
+    D=M-D
+    M=D
+    @MINIMUM
+    D; JGT
+    @R2
+    M=M-1
+    D=M
+    @END
+    D; JEQ
+    @LOOP
+    0; JMP
+
+(END)
+    @END
+    0; JMP

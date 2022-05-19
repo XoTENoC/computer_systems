@@ -1,0 +1,16 @@
+	push static 0
+	push constant 7
+	eq
+	if-goto BASE_CASE
+	push constant 5
+	pop static 1
+	goto END
+
+label BASE_CASE
+	push constant 0
+	push constant 1
+	sub
+	pop static 1
+	goto END
+
+label END

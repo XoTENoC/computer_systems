@@ -6,7 +6,61 @@ using namespace std;
 
 /** Generate Hack Assembly code for a VM push operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_push(string segment, int offset){
-    return "";
+    string segSetup = "@" + to_string(offset) + "\nD=A\n";
+    string segOffset = "A=A+D\nD=M\n";
+    string loadHeap = "A=M\n";
+    string code = "@SP\nA=M\nM=D\n@SP\nM=M+1\n";
+
+
+    code.clear();
+    if (segment == "constant")
+    {
+        break;
+    }
+    else if (segment == "this")
+    {
+        segSetup = "@THIS\n";
+        segSetup += loadHeap + segOffset;
+    }
+    else if (segment == "that")
+    {
+        segSetup = "@THAT\n";
+        segSetup += loadHeap + segOffset;
+    }
+    else if (segment == "pointer")
+    {
+        if (offset == 0)
+        {
+            segSetup = "@THIS\n";
+        }
+        else 
+        {
+            segSetup = "@THAT\n";
+        }
+        segSetup += "D=M";
+    }
+    else if (segment == "argument")
+    {
+        segSetup = "@ARG\n";
+        segSetup += loadHeap + segOffset;
+    }
+    else if (segment == "local")
+    {
+        segSetup = "@LCL\n";
+        segSetup += loadHeap + segOffset;
+    }
+    else if (segment == "temp")
+    {
+        segSetup = "@5\n";
+        segSetup += segOffset;
+    }
+    else if (segment == "static")
+    {
+        segSetup = "@16\n";
+        segSetup += segOffset;
+    }
+
+    return segSetup + code;
 }
 
 /** Generate Hack Assembly code for a VM pop operation assessed in Practical Assignment 6 */

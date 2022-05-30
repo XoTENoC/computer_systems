@@ -1,71 +1,123 @@
 #include <string>
+#include <sstream>
+#include <stdexcept>
+#include <regex>
+#include <cstdint>
 
 #include "VMTranslator.h"
 
 using namespace std;
 
-/** Generate Hack Assembly code for a VM push operation assessed in Practical Assignment 6 */
-string VMTranslator::vm_push(string segment, int offset){
-    string segSetup = "@" + to_string(offset) + "\nD=A\n";
-    string segOffset = "A=A+D\nD=M\n";
-    string loadHeap = "A=M\n";
-    string code = "@SP\nA=M\nM=D\n@SP\nM=M+1\n";
-
-
-    code.clear();
-    if (segment == "constant")
+void VMTranslator::writeto(string asmCode){
+    if(asmCode.find("(") == string::npos)
     {
-        break;
+        streamASM << "\t";
     }
-    else if (segment == "this")
+    streamASM << asmCode << endl;
+}
+
+string VMTranslator::nameReg(string segment, int offset){
+    if (segment == "this")
     {
-        segSetup = "@THIS\n";
-        segSetup += loadHeap + segOffset;
+        return "THIS";
     }
     else if (segment == "that")
     {
-        segSetup = "@THAT\n";
-        segSetup += loadHeap + segOffset;
+        return "THAT";
     }
     else if (segment == "pointer")
     {
-        if (offset == 0)
-        {
-            segSetup = "@THIS\n";
-        }
-        else 
-        {
-            segSetup = "@THAT\n";
-        }
-        segSetup += "D=M";
+        return "R" + to_string(3 + offset);
     }
     else if (segment == "argument")
     {
-        segSetup = "@ARG\n";
-        segSetup += loadHeap + segOffset;
+        return "ARG";
     }
     else if (segment == "local")
     {
-        segSetup = "@LCL\n";
-        segSetup += loadHeap + segOffset;
+        return "LCL";
     }
     else if (segment == "temp")
     {
-        segSetup = "@5\n";
-        segSetup += segOffset;
+        return "R" + to_string(5 + offset);
     }
     else if (segment == "static")
     {
-        segSetup = "@16\n";
-        segSetup += segOffset;
+        return "16";
+    }
+    return "Error";
+}
+
+/** Generate Hack Assembly code for a VM push operation assessed in Practical Assignment 6 */
+string VMTranslator::vm_push(string segment, int offset){;
+
+    streamASM.str(string());
+    string index = to_string(offset);
+    string seg = nameReg(segment, offset);
+
+    if (segment == "constant")
+    {
+        writeto("@"+index);
+        writeto("D=A");
+        writeto("@SP");
+        writeto("A=M");
+        writeto("M=D");
+        writeto("@SP");
+        writeto("M=M+1");
+    }
+    else if (seg == "Error")
+    {
+        throw runtime_error("VM Push(): invalid Segment");
+    }
+    else
+    {
+        writeto("@" + seg);
+        writeto("D=M");
+        writeto("@" + index);
+        writeto("A=D+A");
+        writeto("D=M");
+        writeto("@SP");
+        writeto("A=M");
+        writeto("M=D");
+        writeto("@SP");
+        writeto("M=M+1");
     }
 
-    return segSetup + code;
+    return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM pop operation assessed in Practical Assignment 6 */
-string VMTranslator::vm_pop(string segment, int offset){    
-    return "";
+string VMTranslator::vm_pop(string segment, int offset){
+    
+    streamASM.str(string());
+    string index = to_string(offset);
+    string seg = nameReg(segment, offset);
+    
+    if ( segment == "constant")
+    {
+        throw runtime_error("VM pop(): can't pop constant");
+    }
+    else if ( seg == "Error")
+    {
+        throw runtime_error("VM pop(): invalid Segment");
+    }
+    else
+    {
+        writeto("@" + seg);
+        writeto("D=M");
+        writeto("@" + index);
+        writeto("D=D+A");
+        writeto("@R13");
+        writeto("M=D");
+        writeto("@SP");
+        writeto("AM=M-1");
+        writeto("D=M");
+        writeto("@R13");
+        writeto("A=M");
+        writeto("M=D");
+    }
+
+    return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM add operation assessed in Practical Assignment 6 */

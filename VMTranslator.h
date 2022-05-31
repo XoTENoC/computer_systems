@@ -33,6 +33,9 @@ class VMTranslator {
         string vm_function(string function_name, int n_vars);
         string vm_call(string function_name, int n_args);
         string vm_return();
+
+        /** End the File */
+        string vm_end();
     
     protected:
         void writeto(string code);

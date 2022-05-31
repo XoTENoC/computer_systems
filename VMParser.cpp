@@ -11,13 +11,13 @@ using namespace std;
 
 /** A quick-and-dirty parser */ 
 int main(int argc, char** argv){
+    VMTranslator vmt;
 
     if(argc > 1){
 
         fstream file;
         file.open(argv[1],ios::in);
         if (file.is_open()){   
-            VMTranslator vmt;
             string line;
             while(getline(file, line)){
                 regex endl_re("\\r*\\n+");
@@ -76,4 +76,5 @@ int main(int argc, char** argv){
         }
 
     }
+    cout << vmt.vm_end() << endl;
 } 

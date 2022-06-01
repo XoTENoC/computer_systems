@@ -44,6 +44,14 @@ int main(int argc, char** argv){
                         cout << vmt.vm_gt() << endl;
                     } else if(tokens[0]=="lt"){
                         cout << vmt.vm_lt() << endl;
+                    }else if(tokens[0]=="and"){
+                        cout << vmt.vm_and() << endl;
+                    } else if(tokens[0]=="or"){
+                        cout << vmt.vm_or() << endl;
+                    } else if(tokens[0]=="not"){
+                        cout << vmt.vm_not() << endl;
+                    } else if(tokens[0]=="return"){
+                        cout << vmt.vm_return() << endl;
                     }
                 } else if(tokens.size()==2){
                     if(tokens[0]=="label"){

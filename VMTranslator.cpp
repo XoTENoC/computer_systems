@@ -101,6 +101,24 @@ string VMTranslator::vm_pop(string segment, int offset){
     {
         throw runtime_error("VM pop(): invalid Segment");
     }
+    else if ( segment == "temp" || segment == "static")
+    {
+        writeto("@" + seg + " // Pop " + segment + index);
+        writeto("D=A");
+        writeto("@" + index);
+        writeto("D=D+A");
+        writeto("@R13");
+        writeto("M=D");
+        writeto("@SP");
+        writeto("AM=M-1");
+        writeto("D=M");
+        writeto("@R13");
+        writeto("A=M");
+        writeto("M=D");
+    }
+    else if ( segment == "pointer"){
+        return "";
+    }
     else
     {
         writeto("@" + seg + " // Pop " + segment + index);
@@ -162,7 +180,7 @@ string VMTranslator::vm_eq(){
     writeto("AM=M-1");
     writeto("D=M-D");
     writeto("@ifEQTrue");
-    writeto("D;JQE");
+    writeto("D;JEQ");
     writeto("D=0");
     writeto("@ifEQFalse");
     writeto("0;JMP");
@@ -187,10 +205,10 @@ string VMTranslator::vm_gt(){
     writeto("AM=M-1");
     writeto("D=M-D");
     writeto("@ifGTTrue");
-    writeto("D;JQE");
+    writeto("D;JGT");
     writeto("D=0");
     writeto("@ifGTFalse");
-    writeto("0;JGT");
+    writeto("0;JMP");
     writeto("(ifGTTrue)");
     writeto("D=-1");
     writeto("(ifGTFalse)");

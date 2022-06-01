@@ -126,8 +126,8 @@ string VMTranslator::vm_add(){
     writeto("@SP");
     writeto("AM=M-1");
     writeto("D=M");
-    writeto("A=M-1");
-    writeto("M=D+M");
+    writeto("A=A-1");
+    writeto("M=M+D");
     return streamASM.str() + "\n";
 }
 
@@ -137,7 +137,7 @@ string VMTranslator::vm_sub(){
     writeto("@SP");
     writeto("AM=M-1");
     writeto("D=M");
-    writeto("A=M-1");
+    writeto("A=A-1");
     writeto("M=M-D");
     return streamASM.str() + "\n";
 }

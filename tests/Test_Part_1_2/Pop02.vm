@@ -1,0 +1,4 @@
+push constant 1
+push constant 1
+pop that 1
+pop argument 0

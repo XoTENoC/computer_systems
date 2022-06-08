@@ -1,8 +1,8 @@
 // Example VM Test file; does not compare, but generates a .cmp file for the given .vm file
 // Run using VMEmulator
 
-load test.vm,
-output-file test.cmp,
+load Pop02.vm,
+output-file Pop02.cmp,
 output-list RAM[0]%D1.6.1 RAM[1]%D1.6.1 RAM[2]%D1.6.1 RAM[3]%D1.6.1 RAM[4]%D1.6.1
             RAM[256]%D1.6.1 RAM[257]%D1.6.1 RAM[258]%D1.6.1
             RAM[300]%D1.6.1 RAM[301]%D1.6.1

@@ -1,9 +1,9 @@
 // Example Test file; compares with the results from generated from the VM test file.
 // Run using CPUEmulator
 
-load test.asm,
-output-file test.out,
-compare-to test.cmp,
+load Pop01.asm,
+output-file Pop01.out,
+compare-to Pop01.cmp,
 output-list RAM[0]%D1.6.1 RAM[1]%D1.6.1 RAM[2]%D1.6.1 RAM[3]%D1.6.1 RAM[4]%D1.6.1
             RAM[256]%D1.6.1 RAM[257]%D1.6.1 RAM[258]%D1.6.1
             RAM[300]%D1.6.1 RAM[301]%D1.6.1

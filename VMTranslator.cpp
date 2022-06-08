@@ -71,7 +71,7 @@ string VMTranslator::vm_push(string segment, int offset){;
     {
         throw runtime_error("VM Push(): invalid Segment");
     }
-    else if (segment == "static" || segment == "temp")
+    else if (segment == "static")
     {
         writeToScreen("@" + seg +" // Push " + segment + " " + index);
         writeToScreen("D=A");
@@ -116,7 +116,7 @@ string VMTranslator::vm_pop(string segment, int offset){
     {
         throw runtime_error("VM pop(): invalid Segment");
     }
-    else if ( segment == "temp" || segment == "static")
+    else if (segment == "static")
     {
         writeToScreen("@" + seg + " // Pop " + segment + index);
         writeToScreen("D=A");
@@ -130,9 +130,6 @@ string VMTranslator::vm_pop(string segment, int offset){
         writeToScreen("@R13");
         writeToScreen("A=M");
         writeToScreen("M=D");
-    }
-    else if ( segment == "pointer"){
-        return "";
     }
     else
     {

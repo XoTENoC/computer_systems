@@ -141,6 +141,14 @@ string VMTranslator::vm_pop(string segment, int offset){
         writeToScreen("A=M");
         writeToScreen("M=D");
     }
+    else if (segment == "pointer" || segment == "temp")
+    {
+        writeToScreen("@SP");
+        writeToScreen("AM=M-1");
+        writeToScreen("A=M");
+        writeToScreen("@" + seg);
+        writeToScreen("M=D");
+    }
     else
     {
         writeToScreen("@" + seg + " // Pop " + segment + index);

@@ -29,7 +29,7 @@ string nameReg(string segment, int offset){
     }
     else if (segment == "pointer")
     {
-        return "R" + to_string(3 + offset);
+        return to_string(3 + offset);
     }
     else if (segment == "argument")
     {

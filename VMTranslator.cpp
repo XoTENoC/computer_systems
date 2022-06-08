@@ -8,7 +8,9 @@
 
 using namespace std;
 
-void VMTranslator::writeToScreen(string asmCode){
+static stringstream streamASM;
+
+void writeToScreen(string asmCode){
     if(asmCode.find("(") == string::npos)
     {
         streamASM << "\t";
@@ -16,7 +18,7 @@ void VMTranslator::writeToScreen(string asmCode){
     streamASM << asmCode << endl;
 }
 
-string VMTranslator::nameReg(string segment, int offset){
+string nameReg(string segment, int offset){
     if (segment == "this")
     {
         return "THIS";

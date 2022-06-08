@@ -38,9 +38,6 @@ class VMTranslator {
         string vm_end();
     
     protected:
-        void writeToScreen(string code);
-        string nameReg(string segment, int offset);
-        stringstream streamASM;
         
 };
 

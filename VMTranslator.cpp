@@ -71,10 +71,23 @@ string VMTranslator::vm_push(string segment, int offset){;
     {
         throw runtime_error("VM Push(): invalid Segment");
     }
-    else
+    else if (segment == "static" || segment == "temp")
     {
         writeToScreen("@" + seg +" // Push " + segment + " " + index);
         writeToScreen("D=A");
+        writeToScreen("@" + index);
+        writeToScreen("A=D+A");
+        writeToScreen("D=M");
+        writeToScreen("@SP");
+        writeToScreen("A=M");
+        writeToScreen("M=D");
+        writeToScreen("@SP");
+        writeToScreen("M=M+1");
+    }
+    else
+    {
+        writeToScreen("@" + seg +" // Push " + segment + " " + index);
+        writeToScreen("D=M");
         writeToScreen("@" + index);
         writeToScreen("A=D+A");
         writeToScreen("D=M");

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void VMTranslator::writeto(string asmCode){
+void VMTranslator::writeToScreen(string asmCode){
     if(asmCode.find("(") == string::npos)
     {
         streamASM << "\t";
@@ -57,13 +57,13 @@ string VMTranslator::vm_push(string segment, int offset){;
 
     if (segment == "constant")
     {
-        writeto("@"+index+" // Push " + segment + " " + index);
-        writeto("D=A");
-        writeto("@SP");
-        writeto("A=M");
-        writeto("M=D");
-        writeto("@SP");
-        writeto("M=M+1");
+        writeToScreen("@"+index+" // Push " + segment + " " + index);
+        writeToScreen("D=A");
+        writeToScreen("@SP");
+        writeToScreen("A=M");
+        writeToScreen("M=D");
+        writeToScreen("@SP");
+        writeToScreen("M=M+1");
     }
     else if (seg == "Error")
     {
@@ -71,16 +71,16 @@ string VMTranslator::vm_push(string segment, int offset){;
     }
     else
     {
-        writeto("@" + seg +" // Push " + segment + " " + index);
-        writeto("D=M");
-        writeto("@" + index);
-        writeto("A=D+A");
-        writeto("D=M");
-        writeto("@SP");
-        writeto("A=M");
-        writeto("M=D");
-        writeto("@SP");
-        writeto("M=M+1");
+        writeToScreen("@" + seg +" // Push " + segment + " " + index);
+        writeToScreen("D=M");
+        writeToScreen("@" + index);
+        writeToScreen("A=D+A");
+        writeToScreen("D=M");
+        writeToScreen("@SP");
+        writeToScreen("A=M");
+        writeToScreen("M=D");
+        writeToScreen("@SP");
+        writeToScreen("M=M+1");
     }
 
     return streamASM.str() + "\n";
@@ -103,36 +103,36 @@ string VMTranslator::vm_pop(string segment, int offset){
     }
     else if ( segment == "temp" || segment == "static")
     {
-        writeto("@" + seg + " // Pop " + segment + index);
-        writeto("D=A");
-        writeto("@" + index);
-        writeto("D=D+A");
-        writeto("@R13");
-        writeto("M=D");
-        writeto("@SP");
-        writeto("AM=M-1");
-        writeto("D=M");
-        writeto("@R13");
-        writeto("A=M");
-        writeto("M=D");
+        writeToScreen("@" + seg + " // Pop " + segment + index);
+        writeToScreen("D=A");
+        writeToScreen("@" + index);
+        writeToScreen("D=D+A");
+        writeToScreen("@R13");
+        writeToScreen("M=D");
+        writeToScreen("@SP");
+        writeToScreen("AM=M-1");
+        writeToScreen("D=M");
+        writeToScreen("@R13");
+        writeToScreen("A=M");
+        writeToScreen("M=D");
     }
     else if ( segment == "pointer"){
         return "";
     }
     else
     {
-        writeto("@" + seg + " // Pop " + segment + index);
-        writeto("D=M");
-        writeto("@" + index);
-        writeto("D=D+A");
-        writeto("@R13");
-        writeto("M=D");
-        writeto("@SP");
-        writeto("AM=M-1");
-        writeto("D=M");
-        writeto("@R13");
-        writeto("A=M");
-        writeto("M=D");
+        writeToScreen("@" + seg + " // Pop " + segment + index);
+        writeToScreen("D=M");
+        writeToScreen("@" + index);
+        writeToScreen("D=D+A");
+        writeToScreen("@R13");
+        writeToScreen("M=D");
+        writeToScreen("@SP");
+        writeToScreen("AM=M-1");
+        writeToScreen("D=M");
+        writeToScreen("@R13");
+        writeToScreen("A=M");
+        writeToScreen("M=D");
     }
 
     return streamASM.str() + "\n";
@@ -141,139 +141,139 @@ string VMTranslator::vm_pop(string segment, int offset){
 /** Generate Hack Assembly code for a VM add operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_add(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M");
-    writeto("A=A-1");
-    writeto("M=M+D");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M");
+    writeToScreen("A=A-1");
+    writeToScreen("M=M+D");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM sub operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_sub(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M");
-    writeto("A=A-1");
-    writeto("M=M-D");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M");
+    writeToScreen("A=A-1");
+    writeToScreen("M=M-D");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM neg operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_neg(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("A=M");
-    writeto("A=A-1");
-    writeto("M=-M");
+    writeToScreen("@SP");
+    writeToScreen("A=M");
+    writeToScreen("A=A-1");
+    writeToScreen("M=-M");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM eq operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_eq(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M");
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M-D");
-    writeto("@ifEQTrue");
-    writeto("D;JEQ");
-    writeto("D=0");
-    writeto("@ifEQFalse");
-    writeto("0;JMP");
-    writeto("(ifEQTrue)");
-    writeto("D=-1");
-    writeto("(ifEQFalse)");
-    writeto("@SP");
-    writeto("A=M");
-    writeto("M=D");
-    writeto("@SP");
-    writeto("M=M+1");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M-D");
+    writeToScreen("@ifEQTrue");
+    writeToScreen("D;JEQ");
+    writeToScreen("D=0");
+    writeToScreen("@ifEQFalse");
+    writeToScreen("0;JMP");
+    writeToScreen("(ifEQTrue)");
+    writeToScreen("D=-1");
+    writeToScreen("(ifEQFalse)");
+    writeToScreen("@SP");
+    writeToScreen("A=M");
+    writeToScreen("M=D");
+    writeToScreen("@SP");
+    writeToScreen("M=M+1");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM gt operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_gt(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M");
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M-D");
-    writeto("@ifGTTrue");
-    writeto("D;JGT");
-    writeto("D=0");
-    writeto("@ifGTFalse");
-    writeto("0;JMP");
-    writeto("(ifGTTrue)");
-    writeto("D=-1");
-    writeto("(ifGTFalse)");
-    writeto("@SP");
-    writeto("A=M");
-    writeto("M=D");
-    writeto("@SP");
-    writeto("M=M+1");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M-D");
+    writeToScreen("@ifGTTrue");
+    writeToScreen("D;JGT");
+    writeToScreen("D=0");
+    writeToScreen("@ifGTFalse");
+    writeToScreen("0;JMP");
+    writeToScreen("(ifGTTrue)");
+    writeToScreen("D=-1");
+    writeToScreen("(ifGTFalse)");
+    writeToScreen("@SP");
+    writeToScreen("A=M");
+    writeToScreen("M=D");
+    writeToScreen("@SP");
+    writeToScreen("M=M+1");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM lt operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_lt(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M");
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M-D");
-    writeto("@ifLTTrue");
-    writeto("D;JLT");
-    writeto("D=0");
-    writeto("@ifLTFalse");
-    writeto("0;JMP");
-    writeto("(ifLTTrue)");
-    writeto("D=-1");
-    writeto("(ifLTFalse)");
-    writeto("@SP");
-    writeto("A=M");
-    writeto("M=D");
-    writeto("@SP");
-    writeto("M=M+1");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M-D");
+    writeToScreen("@ifLTTrue");
+    writeToScreen("D;JLT");
+    writeToScreen("D=0");
+    writeToScreen("@ifLTFalse");
+    writeToScreen("0;JMP");
+    writeToScreen("(ifLTTrue)");
+    writeToScreen("D=-1");
+    writeToScreen("(ifLTFalse)");
+    writeToScreen("@SP");
+    writeToScreen("A=M");
+    writeToScreen("M=D");
+    writeToScreen("@SP");
+    writeToScreen("M=M+1");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM and operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_and(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M");
-    writeto("A=A-1");
-    writeto("M=D&M");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M");
+    writeToScreen("A=A-1");
+    writeToScreen("M=D&M");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM or operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_or(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("AM=M-1");
-    writeto("D=M");
-    writeto("A=A-1");
-    writeto("M=D|M");
+    writeToScreen("@SP");
+    writeToScreen("AM=M-1");
+    writeToScreen("D=M");
+    writeToScreen("A=A-1");
+    writeToScreen("M=D|M");
     return streamASM.str() + "\n";
 }
 
 /** Generate Hack Assembly code for a VM not operation assessed in Practical Assignment 6 */
 string VMTranslator::vm_not(){
     streamASM.str(string());
-    writeto("@SP");
-    writeto("A=M");
-    writeto("A=A-1");
-    writeto("M=!M");
+    writeToScreen("@SP");
+    writeToScreen("A=M");
+    writeToScreen("A=A-1");
+    writeToScreen("M=!M");
     return streamASM.str() + "\n";
 }
 
@@ -309,8 +309,8 @@ string VMTranslator::vm_return(){
 
 string VMTranslator::vm_end(){
     streamASM.str(string());
-    writeto("(END)");
-    writeto("@END");
-    writeto("0;JMP");
+    writeToScreen("(END)");
+    writeToScreen("@END");
+    writeToScreen("0;JMP");
     return streamASM.str() + "\n";
 }

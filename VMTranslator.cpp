@@ -145,7 +145,7 @@ string VMTranslator::vm_pop(string segment, int offset){
     {
         writeToScreen("@SP");
         writeToScreen("AM=M-1");
-        writeToScreen("A=M");
+        writeToScreen("D=M");
         writeToScreen("@" + seg);
         writeToScreen("M=D");
     }

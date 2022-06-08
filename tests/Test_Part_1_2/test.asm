@@ -61,6 +61,18 @@
 	M=M+1
 
 
+	@16 // Push static 0
+	D=M
+	@0
+	A=D+A
+	D=M
+	@SP
+	A=M
+	M=D
+	@SP
+	M=M+1
+
+
 	@LCL // Pop local1
 	D=M
 	@1

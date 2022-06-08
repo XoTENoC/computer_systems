@@ -15,7 +15,7 @@ set argument 400,  // base address of the argument segment
 set this 3000,     // base address of the this segment
 set that 3010,     // base address of the that segment
 
-repeat 8 {        // Change this number to cover the number of instructions in the VM test file
+repeat 9 {        // Change this number to cover the number of instructions in the VM test file
   vmstep;
 }
 

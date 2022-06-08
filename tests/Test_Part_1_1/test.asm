@@ -79,9 +79,9 @@
 	M=M+1
 
 
-	@16 // Push static 0
+	@16 // Push static 2
 	D=M
-	@0
+	@2
 	A=D+A
 	D=M
 	@SP
@@ -91,8 +91,15 @@
 	M=M+1
 
 
-(END)
-	@END
-	0;JMP
+	@16 // Push static 2
+	D=M
+	@2
+	A=D+A
+	D=M
+	@SP
+	A=M
+	M=D
+	@SP
+	M=M+1
 
 

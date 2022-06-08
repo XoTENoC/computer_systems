@@ -74,7 +74,7 @@ string VMTranslator::vm_push(string segment, int offset){;
     else
     {
         writeToScreen("@" + seg +" // Push " + segment + " " + index);
-        writeToScreen("D=M");
+        writeToScreen("D=A");
         writeToScreen("@" + index);
         writeToScreen("A=D+A");
         writeToScreen("D=M");

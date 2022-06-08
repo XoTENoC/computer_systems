@@ -84,5 +84,4 @@ int main(int argc, char** argv){
         }
 
     }
-    cout << vmt.vm_end() << endl;
 } 

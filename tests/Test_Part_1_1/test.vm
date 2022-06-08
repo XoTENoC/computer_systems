@@ -5,4 +5,5 @@ push that 1
 push pointer 1
 push argument 0
 push temp 0
-push static 0
+push static 2
+push static 2

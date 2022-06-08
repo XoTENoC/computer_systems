@@ -309,10 +309,10 @@ string VMTranslator::vm_return(){
     return "";
 }
 
-string VMTranslator::vm_end(){
-    streamASM.str(string());
-    writeToScreen("(END)");
-    writeToScreen("@END");
-    writeToScreen("0;JMP");
-    return streamASM.str() + "\n";
-}
+// string VMTranslator::vm_end(){
+//     streamASM.str(string());
+//     writeToScreen("(END)");
+//     writeToScreen("@END");
+//     writeToScreen("0;JMP");
+//     return streamASM.str() + "\n";
+// }

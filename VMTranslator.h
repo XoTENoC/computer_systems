@@ -36,8 +36,6 @@ class VMTranslator {
 
         /** End the File */
         string vm_end();
-    
-    protected:
         
 };
 

@@ -29,7 +29,7 @@ string nameReg(string segment, int offset){
     }
     else if (segment == "pointer")
     {
-        return "R" + to_string(3);
+        return "R" + to_string(3 + offset);
     }
     else if (segment == "argument")
     {
@@ -41,7 +41,7 @@ string nameReg(string segment, int offset){
     }
     else if (segment == "temp")
     {
-        return "R" + to_string(5);
+        return "R" + to_string(5 + offset);
     }
     else if (segment == "static")
     {
@@ -77,6 +77,16 @@ string VMTranslator::vm_push(string segment, int offset){;
         writeToScreen("D=A");
         writeToScreen("@" + index);
         writeToScreen("A=D+A");
+        writeToScreen("D=M");
+        writeToScreen("@SP");
+        writeToScreen("A=M");
+        writeToScreen("M=D");
+        writeToScreen("@SP");
+        writeToScreen("M=M+1");
+    }
+    else if (segment == "pointer" || segment == "temp")
+    {
+        writeToScreen("@" + seg +" // Push " + segment + " " + index);
         writeToScreen("D=M");
         writeToScreen("@SP");
         writeToScreen("A=M");
